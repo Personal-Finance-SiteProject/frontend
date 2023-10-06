@@ -9,7 +9,7 @@ export type NavLink = {
   path?: string
   title: string
   action?: string
-  subject?: string
+  submenu?: string
   disabled?: boolean
   badgeContent?: string
   externalLink?: boolean

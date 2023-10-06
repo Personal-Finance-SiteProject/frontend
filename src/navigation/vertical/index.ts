@@ -4,11 +4,16 @@ import Table from 'mdi-material-ui/Table'
 import CubeOutline from 'mdi-material-ui/CubeOutline'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
 import FormatLetterCase from 'mdi-material-ui/FormatLetterCase'
-import AccountCogOutline from 'mdi-material-ui/AccountCogOutline'
+import AccountCircleIcon from 'mdi-material-ui/AccountCircle'
+import QueryStatsIcon from '@mui/icons-material/QueryStats'
 import CreditCardOutline from 'mdi-material-ui/CreditCardOutline'
 import AccountPlusOutline from 'mdi-material-ui/AccountPlusOutline'
 import AlertCircleOutline from 'mdi-material-ui/AlertCircleOutline'
 import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
+import ClassIcon from '@mui/icons-material/Class';
+import PaymentsIcon from '@mui/icons-material/Payments'
+import SavingsIcon from '@mui/icons-material/Savings'
+import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
@@ -17,13 +22,32 @@ const navigation = (): VerticalNavItemsType => {
   return [
     {
       title: 'Dashboard',
-      icon: HomeOutline,
+      icon: SpaceDashboardIcon,
       path: '/'
     },
     {
-      title: 'Account Settings',
-      icon: AccountCogOutline,
-      path: '/account-settings'
+      sectionTitle: 'Menu Principal'
+    },
+    {
+      title: 'Cuenta',
+      icon: AccountCircleIcon,
+      path: '/account-settings',
+    },
+    {
+      title: 'Gastos',
+      icon: PaymentsIcon,
+    },
+    {
+      title: 'Categoria',
+      icon: ClassIcon
+    },
+    {
+      title: 'Ahorros',
+      icon: SavingsIcon
+    },
+    {
+      title: 'Estadistica',
+      icon: QueryStatsIcon
     },
     {
       sectionTitle: 'Pages'
