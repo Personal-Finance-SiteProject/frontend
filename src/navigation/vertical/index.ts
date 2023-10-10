@@ -36,6 +36,7 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Gastos',
       icon: PaymentsIcon,
+      path: '/payments'
     },
     {
       title: 'Categoria',
