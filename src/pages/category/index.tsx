@@ -1,140 +1,164 @@
-// ** React Imports
-import { useState, ChangeEvent } from 'react'
-
 // ** MUI Imports
-import Paper from '@mui/material/Paper'
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import Chip from '@mui/material/Chip'
 import Table from '@mui/material/Table'
 import TableRow from '@mui/material/TableRow'
 import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
+import Typography from '@mui/material/Typography'
 import TableContainer from '@mui/material/TableContainer'
-import TablePagination from '@mui/material/TablePagination'
 
-interface Column {
-  id: 'name' | 'code' | 'population' | 'size' | 'density'
-  label: string
-  minWidth?: number
-  align?: 'right'
-  format?: (value: number) => string
-}
+// ** Types Imports
+import { ThemeColor } from 'src/@core/layouts/types'
 
-const columns: readonly Column[] = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
-  {
-    id: 'population',
-    label: 'Population',
-    minWidth: 170,
-    align: 'right',
-    format: (value: number) => value.toLocaleString('en-US')
-  },
-  {
-    id: 'size',
-    label: 'Size\u00a0(km\u00b2)',
-    minWidth: 170,
-    align: 'right',
-    format: (value: number) => value.toLocaleString('en-US')
-  },
-  {
-    id: 'density',
-    label: 'Density',
-    minWidth: 170,
-    align: 'right',
-    format: (value: number) => value.toFixed(2)
-  }
-]
-
-interface Data {
+interface RowType {
+  age: number
   name: string
-  code: string
-  size: number
-  density: number
-  population: number
+  date: string
+  email: string
+  salary: string
+  status: string
+  designation: string
 }
 
-function createData(name: string, code: string, population: number, size: number): Data {
-  const density = population / size
-
-  return { name, code, population, size, density }
+interface StatusObj {
+  [key: string]: {
+    color: ThemeColor
+  }
 }
 
-const rows = [
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('Germany', 'DE', 83019200, 357578),
-  createData('Ireland', 'IE', 4857000, 70273),
-  createData('Mexico', 'MX', 126577691, 1972550),
-  createData('Japan', 'JP', 126317000, 377973),
-  createData('France', 'FR', 67022000, 640679),
-  createData('United Kingdom', 'GB', 67545757, 242495),
-  createData('Russia', 'RU', 146793744, 17098246),
-  createData('Nigeria', 'NG', 200962417, 923768),
-  createData('Brazil', 'BR', 210147125, 8515767)
+const rows: RowType[] = [
+  {
+    age: 27,
+    status: 'current',
+    date: '09/27/2018',
+    name: 'Sally Quinn',
+    salary: '$19586.23',
+    email: 'eebsworth2m@sbwire.com',
+    designation: 'Human Resources Assistant'
+  },
+  {
+    age: 61,
+    date: '09/23/2016',
+    salary: '$23896.35',
+    status: 'professional',
+    name: 'Margaret Bowers',
+    email: 'kocrevy0@thetimes.co.uk',
+    designation: 'Nuclear Power Engineer'
+  },
+  {
+    age: 59,
+    date: '10/15/2017',
+    name: 'Minnie Roy',
+    status: 'rejected',
+    salary: '$18991.67',
+    email: 'ediehn6@163.com',
+    designation: 'Environmental Specialist'
+  },
+  {
+    age: 30,
+    date: '06/12/2018',
+    status: 'resigned',
+    salary: '$19252.12',
+    name: 'Ralph Leonard',
+    email: 'dfalloona@ifeng.com',
+    designation: 'Sales Representative'
+  },
+  {
+    age: 66,
+    status: 'applied',
+    date: '03/24/2018',
+    salary: '$13076.28',
+    name: 'Annie Martin',
+    designation: 'Operator',
+    email: 'sganderton2@tuttocitta.it'
+  },
+  {
+    age: 33,
+    date: '08/25/2017',
+    salary: '$10909.52',
+    name: 'Adeline Day',
+    status: 'professional',
+    email: 'hnisius4@gnu.org',
+    designation: 'Senior Cost Accountant'
+  },
+  {
+    age: 61,
+    status: 'current',
+    date: '06/01/2017',
+    salary: '$17803.80',
+    name: 'Lora Jackson',
+    designation: 'Geologist',
+    email: 'ghoneywood5@narod.ru'
+  },
+  {
+    age: 22,
+    date: '12/03/2017',
+    salary: '$12336.17',
+    name: 'Rodney Sharp',
+    status: 'professional',
+    designation: 'Cost Accountant',
+    email: 'dcrossman3@google.co.jp'
+  }
 ]
 
-const TableStickyHeader = () => {
-  // ** States
-  const [page, setPage] = useState<number>(0)
-  const [rowsPerPage, setRowsPerPage] = useState<number>(10)
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage)
-  }
-
-  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value)
-    setPage(0)
-  }
-
-
-  return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-  <TableContainer sx={{ maxHeight: 440 }}>
-  <Table stickyHeader aria-label='sticky table'>
-    <TableHead>
-      <TableRow>
-        {columns.map(column => (
-            <TableCell key={column.id} align={column.align} sx={{ minWidth: column.minWidth }}>
-  {column.label}
-  </TableCell>
-))}
-  </TableRow>
-  </TableHead>
-  <TableBody>
-  {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-      return (
-        <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
-        {columns.map(column => {
-            const value = row[column.id]
-
-            return (
-              <TableCell key={column.id} align={column.align}>
-              {column.format && typeof value === 'number' ? column.format(value) : value}
-              </TableCell>
-          )
-          })}
-        </TableRow>
-    )
-    })}
-  </TableBody>
-  </Table>
-  </TableContainer>
-  <TablePagination
-  rowsPerPageOptions={[10, 25, 100]}
-  component='div'
-  count={rows.length}
-  rowsPerPage={rowsPerPage}
-  page={page}
-  onPageChange={handleChangePage}
-  onRowsPerPageChange={handleChangeRowsPerPage}
-  />
-  </Paper>
-)
+const statusObj: StatusObj = {
+  applied: { color: 'info' },
+  rejected: { color: 'error' },
+  current: { color: 'primary' },
+  resigned: { color: 'warning' },
+  professional: { color: 'success' }
 }
 
-export default TableStickyHeader
+const DashboardTable = () => {
+  return (
+    <Card>
+      <TableContainer>
+        <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Salary</TableCell>
+              <TableCell>Age</TableCell>
+              <TableCell>Status</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row: RowType) => (
+              <TableRow hover key={row.name} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
+                <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
+                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{row.name}</Typography>
+                    <Typography variant='caption'>{row.designation}</Typography>
+                  </Box>
+                </TableCell>
+                <TableCell>{row.email}</TableCell>
+                <TableCell>{row.date}</TableCell>
+                <TableCell>{row.salary}</TableCell>
+                <TableCell>{row.age}</TableCell>
+                <TableCell>
+                  <Chip
+                    label={row.status}
+                    color={statusObj[row.status].color}
+                    sx={{
+                      height: 24,
+                      fontSize: '0.75rem',
+                      textTransform: 'capitalize',
+                      '& .MuiChip-label': { fontWeight: 500 }
+                    }}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Card>
+  )
+}
+
+export default DashboardTable

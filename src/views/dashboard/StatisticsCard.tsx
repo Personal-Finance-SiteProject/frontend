@@ -52,6 +52,18 @@ const salesData: DataType[] = [
     color: 'info',
     title: 'Revenue',
     icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />
+  },
+  {
+    stats: '$88k',
+    color: 'info',
+    title: 'Revenue',
+    icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />
+  },
+  {
+    stats: '$88k',
+    color: 'info',
+    title: 'Revenue',
+    icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />
   }
 ]
 
